@@ -1,5 +1,12 @@
 const gridContainer = document.querySelector(".grid-container");
 const resizeBtn = document.querySelector(".resize-btn");
+const eraserBtn = document.querySelector(".eraser-btn");
+
+const randomNum = () => Math.random() * 255 + 1;
+let red = 0;
+let green = 0;
+let blue = 0;
+let eraser = false;
 
 function generateGrid(size = 16) {
   gridContainer.innerHTML = "";
@@ -10,11 +17,16 @@ function generateGrid(size = 16) {
       const square = document.createElement("div");
       square.addEventListener("mouseover", (e) => {
         square.classList.remove("transition-trail");
-        square.style.backgroundColor = "red";
+        red = eraser ? 255 : randomNum();
+        green = eraser ? 255 : randomNum();
+        blue = eraser ? 255 : randomNum();
+        square.style.backgroundColor = `rgb(${red},${green},${blue})`;
       });
       square.addEventListener("mouseleave", (e) => {
         square.classList.add("transition-trail");
-        square.style.backgroundColor = "#ff00006b";
+        square.style.backgroundColor = `rgba(${red},${green},${blue},${
+          eraser ? 1 : 0.3
+        })`;
       });
       row.insertAdjacentElement("afterbegin", square);
       square.classList.add("square");
@@ -29,4 +41,10 @@ resizeBtn.addEventListener("click", () => {
   const size = +prompt("Enter grid size less than 100");
   generateGrid(size > 100 ? 100 : size);
 });
+
+eraserBtn.addEventListener("click", () => {
+  eraser = !eraser;
+  alert(`eraser: ${eraser ? "on" : "off"}`);
+});
+
 // gridContainer.appendChild(square);
