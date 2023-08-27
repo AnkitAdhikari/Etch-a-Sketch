@@ -1,6 +1,7 @@
 const gridContainer = document.querySelector(".grid-container");
 const resizeBtn = document.querySelector(".resize-btn");
 const eraserBtn = document.querySelector(".eraser-btn");
+const eraseAllBtn = document.querySelector(".erase-all-btn");
 
 const randomNum = () => Math.random() * 255 + 1;
 let red = 0;
@@ -48,3 +49,9 @@ eraserBtn.addEventListener("click", () => {
 });
 
 // gridContainer.appendChild(square);
+eraseAllBtn.addEventListener("click", () => {
+  document.querySelectorAll(".square").forEach((el) => {
+    el.style.transition = "none";
+    el.style.backgroundColor = "white";
+  });
+});
